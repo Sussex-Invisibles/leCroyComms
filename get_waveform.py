@@ -1,7 +1,6 @@
 import os
 import sys
 import struct
-import ROOT
 
 def read_word(fin,address):
     fin.seek(address)
