@@ -57,6 +57,21 @@ class LeCroy684(object):
         self._debug(request)
         return self._conn.ask(request)
 
+    def set_trigger(self, channel, level, averaging=None, rising=True):
+        """Set the trigger parameters for the scope.
+        
+        Set an int to allow averaging.
+        """
+        pass
+#        request = "TRSE %s,SR,C%01d"
+#        request = "C%01d:TRLV %fV" % (channel, level)
+
+    def get_trigger(self, channel):
+        """Set the trigger on the scope and wait before acquiring waveform.
+        """
+        # TODO: add timeout
+        return self._request("ARM;WAIT;C%01d:WF?" % (channel))
+
     def get_waveform(self, channel):
         """Just get the waveform
         """
