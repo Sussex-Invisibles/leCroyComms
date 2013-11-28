@@ -202,6 +202,7 @@ class LeCroy684(object):
         if parameter in self._measurements:
             response = self._ask("%s:PAVA? %s" % (chstr(channel), self._measurements[parameter]))
             bits = response.split(",") # returns measurement, value unit, OK/NOTOK
+            value = None
             try:
                 value = float(bits[1].split()[0])
                 units = str(bits[1].split()[1])
@@ -211,7 +212,7 @@ class LeCroy684(object):
                     value = -9999
                 else:
                     raise ScopeException("Unknown parameter type %s" % parameter)
-                return value
+            return value
         else VisaIOError:
             raise ScopeException("Unknown parameter type %s" % parameter)
     
