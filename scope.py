@@ -201,13 +201,17 @@ class LeCroy684(object):
         """
         if parameter in self._measurements:
             response = self._ask("%s:PAVA? %s" % (chstr(channel), self._measurements[parameter]))
+            bits = response.split(",") # returns measurement, value unit, OK/NOTOK
             try:
-                bits = response.split(",") # returns measurement, value unit, OK/NOTOK
                 value = float(bits[1].split()[0])
                 units = str(bits[1].split()[1])
-                return value
             except:
-                raise ScopeException("Could not parse measurement %s" % response)
-        else:
+                # test to see if it's undefined
+                if "UNDEF" in bits[1]:
+                    value = -9999
+                else:
+                    raise ScopeException("Unknown parameter type %s" % parameter)
+                return value
+        else VisaIOError:
             raise ScopeException("Unknown parameter type %s" % parameter)
     
