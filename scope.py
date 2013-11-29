@@ -213,6 +213,6 @@ class LeCroy684(object):
                 else:
                     raise ScopeException("Unknown parameter type %s" % parameter)
             return value
-        else VisaIOError:
+        else:
             raise ScopeException("Unknown parameter type %s" % parameter)
     
